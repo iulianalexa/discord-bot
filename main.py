@@ -4,6 +4,7 @@ import code         # code.interact
 import os           # environment variables
 import inspect      # call stack inspection
 import random       # dumb random number generator
+import argparse
 
 from discord.ext import commands    # Bot class and utils
 
@@ -154,6 +155,12 @@ if __name__ == '__main__':
         log_msg('save your token in the BOT_TOKEN env variable!', 'error')
         exit(-1)
     # launch bot (blocking operation)
-    bot.run(os.environ['BOT_TOKEN'])
-    
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--token", type=str, required=False)
+    args = parser.parse_args()
+    if args.token:
+        token = args.token
+    else:
+        token = os.environ["BOT_TOKEN"]
+    bot.run(token)
 
